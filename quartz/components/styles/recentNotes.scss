@@ -1,3 +1,5 @@
+@use "../../styles/variables.scss" as *;
+
 .recent-notes {
   & > h3 {
     margin: 0.5rem 0 0 0;
@@ -19,6 +21,46 @@
         margin: 0 0 0.5rem 0;
         opacity: 0.6;
         font-family: var(--metadataFont);
+      }
+    }
+  }
+
+  // Mobile: Different styles based on placement
+  @media all and ($mobile) {
+    // Hide in left sidebar on mobile
+    .sidebar.left & {
+      display: none;
+    }
+
+    // Style for afterBody/page-footer area on mobile
+    .page-footer & {
+      margin-top: 2rem;
+
+      & > h3 {
+        margin-top: 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+
+      & > ul.recent-ul {
+        margin-top: 1rem;
+
+        & > li {
+          margin: 1.5rem 0;
+          padding: 1rem;
+          background-color: var(--lightgray);
+          border-radius: 6px;
+
+          .section > .desc > h3 {
+            font-size: 1rem;
+            margin: 0 0 0.5rem 0;
+          }
+
+          .section > .meta {
+            font-size: 0.875rem;
+            margin: 0 0 0.5rem 0;
+          }
+        }
       }
     }
   }

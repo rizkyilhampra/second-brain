@@ -37,18 +37,28 @@ export const defaultContentPageLayout: PageLayout = {
           grow: true,
         },
         { Component: Component.Darkmode() },
-        { Component: Component.ReaderMode() },
       ],
     }),
-    Component.RecentNotes({
-      limit: 3,
-      filter: (page) => page.slug !== "index",
-    }),
+    Component.Explorer(),
+    Component.DesktopOnly(
+      Component.RecentNotes({
+        limit: 3,
+        filter: (page) => page.slug !== "index",
+      }),
+    ),
   ],
   right: [
     Component.Graph(),
     Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
+  ],
+  afterBody: [
+    Component.MobileOnly(
+      Component.RecentNotes({
+        limit: 3,
+        filter: (page) => page.slug !== "index",
+      }),
+    ),
   ],
 }
 
@@ -74,10 +84,21 @@ export const defaultListPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    Component.RecentNotes({
-      limit: 3,
-      filter: (page) => page.slug !== "index",
-    }),
+    Component.Explorer(),
+    Component.DesktopOnly(
+      Component.RecentNotes({
+        limit: 3,
+        filter: (page) => page.slug !== "index",
+      }),
+    ),
   ],
   right: [],
+  afterBody: [
+    Component.MobileOnly(
+      Component.RecentNotes({
+        limit: 3,
+        filter: (page) => page.slug !== "index",
+      }),
+    ),
+  ],
 }
