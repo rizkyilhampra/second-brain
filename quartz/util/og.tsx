@@ -30,7 +30,7 @@ export async function getSatoriFonts(headerFont: FontSpecification, bodyFont: Fo
 
   // Fetch fonts for all weights and convert to satori format in one go
   const headerFontPromises = headerWeights.map(async (weight) => {
-    const data = await fetchTtf(headerFontName, weight)
+    const data = await fetchFont(headerFontName, weight)
     if (!data) return null
     return {
       name: headerFontName,
@@ -41,7 +41,7 @@ export async function getSatoriFonts(headerFont: FontSpecification, bodyFont: Fo
   })
 
   const bodyFontPromises = bodyWeights.map(async (weight) => {
-    const data = await fetchTtf(bodyFontName, weight)
+    const data = await fetchFont(bodyFontName, weight)
     if (!data) return null
     return {
       name: bodyFontName,
@@ -63,6 +63,68 @@ export async function getSatoriFonts(headerFont: FontSpecification, bodyFont: Fo
   ]
 
   return fonts
+}
+
+/**
+ * Fetch font data - handles both local Iosevka Etoile and Google fonts
+ * @param fontName name of font
+ * @param weight font weight to fetch
+ * @returns font file data
+ */
+async function fetchFont(
+  fontName: string,
+  weight: FontWeight,
+): Promise<Buffer<ArrayBufferLike> | undefined> {
+  // Handle Iosevka Etoile as a local font
+  if (fontName === "Iosevka Etoile") {
+    return fetchLocalIosevka(weight)
+  }
+
+  // Fall back to Google Fonts for other fonts
+  return fetchTtf(fontName, weight)
+}
+
+/**
+ * Load local Iosevka Etoile font
+ * @param weight font weight to load
+ * @returns font file data
+ */
+async function fetchLocalIosevka(
+  weight: FontWeight,
+): Promise<Buffer<ArrayBufferLike> | undefined> {
+  const weightMap: Record<number, string> = {
+    100: "Thin",
+    200: "ExtraLight",
+    300: "Light",
+    400: "Regular",
+    500: "Medium",
+    600: "SemiBold",
+    700: "Bold",
+    800: "ExtraBold",
+    900: "Heavy",
+  }
+
+  const weightName = weightMap[weight]
+  if (!weightName) {
+    console.log(
+      styleText("yellow", `\nWarning: Unsupported font weight ${weight} for Iosevka Etoile`),
+    )
+    return undefined
+  }
+
+  const fontPath = path.join(QUARTZ, "static", "fonts", `IosevkaEtoile-${weightName}.ttc`)
+
+  try {
+    return await fs.readFile(fontPath)
+  } catch (error) {
+    console.log(
+      styleText(
+        "yellow",
+        `\nWarning: Failed to load local font Iosevka Etoile ${weightName} at ${fontPath}`,
+      ),
+    )
+    return undefined
+  }
 }
 
 /**
@@ -195,8 +257,8 @@ export const defaultImage: SocialImageOptions["imageStructure"] = ({
 
   // Get tags if available
   const tags = fileData.frontmatter?.tags ?? []
-  const bodyFont = "Iosevka Etoile"
-  const headerFont = getFontSpecificationName(cfg.theme.typography.header)
+  const bodyFont = "IBM Plex Mono"
+  const headerFont = "IBM Plex Mono"
 
   return (
     <div

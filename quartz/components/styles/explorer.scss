@@ -162,7 +162,7 @@ button.desktop-explorer {
 
   & div > a {
     color: var(--secondary);
-    font-family: var(--headerFont);
+    font-family: "Iosevka Etoile", var(--bodyFont);
     font-size: 0.95rem;
     font-weight: $semiBoldWeight;
     line-height: 1.5rem;
@@ -183,7 +183,7 @@ button.desktop-explorer {
     padding-right: 0;
     display: flex;
     align-items: center;
-    font-family: var(--headerFont);
+    font-family: "Iosevka Etoile", var(--bodyFont);
 
     & span {
       font-size: 0.95rem;
