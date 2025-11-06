@@ -110,10 +110,9 @@ export const CustomOgImages: QuartzEmitterPlugin<Partial<SocialImageOptions>> = 
       return []
     },
     async *emit(ctx, content, _resources) {
-      // Use IBM Plex Mono as fallback for OG images (Satori doesn't support .ttc files)
-      const headerFont = "IBM Plex Mono"
-      const bodyFont = "IBM Plex Mono"
-      const fonts = await getSatoriFonts(headerFont, bodyFont)
+      const cfg = ctx.cfg.configuration
+      const titleFont = cfg.theme.typography.title || "Geist"
+      const fonts = await getSatoriFonts(titleFont, titleFont)
 
       for (const [_tree, vfile] of content) {
         if (vfile.data.frontmatter?.socialImage !== undefined) continue
@@ -121,10 +120,9 @@ export const CustomOgImages: QuartzEmitterPlugin<Partial<SocialImageOptions>> = 
       }
     },
     async *partialEmit(ctx, _content, _resources, changeEvents) {
-      // Use IBM Plex Mono as fallback for OG images (Satori doesn't support .ttc files)
-      const headerFont = "IBM Plex Mono"
-      const bodyFont = "IBM Plex Mono"
-      const fonts = await getSatoriFonts(headerFont, bodyFont)
+      const cfg = ctx.cfg.configuration
+      const titleFont = cfg.theme.typography.title || "Geist"
+      const fonts = await getSatoriFonts(titleFont, titleFont)
 
       // find all slugs that changed or were added
       for (const changeEvent of changeEvents) {

@@ -16,7 +16,7 @@ body {
   margin: 0;
   box-sizing: border-box;
   background-color: var(--light);
-  font-family: "Iosevka Etoile", var(--bodyFont);
+  font-family: var(--bodyFont);
   color: var(--darkgray);
 }
 
@@ -353,7 +353,7 @@ h4,
 h5,
 h6,
 thead {
-  font-family: "Iosevka Etoile", var(--bodyFont);
+  font-family: var(--bodyFont);
   color: var(--dark);
   font-weight: revert;
   margin-bottom: 0;

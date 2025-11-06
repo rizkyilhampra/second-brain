@@ -257,8 +257,9 @@ export const defaultImage: SocialImageOptions["imageStructure"] = ({
 
   // Get tags if available
   const tags = fileData.frontmatter?.tags ?? []
-  const bodyFont = "IBM Plex Mono"
-  const headerFont = "IBM Plex Mono"
+  const titleFont = getFontSpecificationName(cfg.theme.typography.title || "Geist")
+  const bodyFont = titleFont
+  const headerFont = titleFont
 
   return (
     <div

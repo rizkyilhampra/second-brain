@@ -102,9 +102,10 @@ export function googleFontHref(theme: Theme) {
 }
 
 export function googleFontSubsetHref(theme: Theme, text: string) {
-  // Title uses Iosevka Etoile (loaded locally), so return empty string
-  // This function is kept for compatibility but not used for font loading
-  return ""
+  const title = theme.typography.title || "Geist"
+  const titleFont = formatFontSpecification("title", title)
+
+  return `https://fonts.googleapis.com/css2?family=${titleFont}&text=${encodeURIComponent(text)}&display=swap`
 }
 
 export interface GoogleFontFile {
@@ -161,6 +162,7 @@ ${stylesheet.join("\n\n")}
   --highlight: ${theme.colors.lightMode.highlight};
   --textHighlight: ${theme.colors.lightMode.textHighlight};
 
+  --titleFont: "${getFontSpecificationName(theme.typography.title || "Geist")}", ${DEFAULT_SANS_SERIF};
   --bodyFont: "Iosevka Etoile", ${DEFAULT_SANS_SERIF};
   --codeFont: "${getFontSpecificationName(theme.typography.code)}", ${DEFAULT_MONO};
   --metadataFont: ${theme.typography.metadata ? `"${getFontSpecificationName(theme.typography.metadata)}", cursive` : `"Iosevka Etoile", ${DEFAULT_SANS_SERIF}`};
