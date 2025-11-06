@@ -24,8 +24,8 @@ const config: QuartzConfig = {
       cdnCaching: true,
       typography: {
         header: "Geist",
-        body: "", // Hardcoded to "Iosevka Etoile" in the styles
         code: "Geist Mono",
+        metadata: "Caveat",
       },
       colors: {
         lightMode: {

@@ -27,8 +27,8 @@ export interface Theme {
   typography: {
     title?: FontSpecification
     header: FontSpecification
-    body: FontSpecification
     code: FontSpecification
+    metadata?: FontSpecification
   }
   cdnCaching: boolean
   colors: Colors
@@ -50,7 +50,7 @@ export function getFontSpecificationName(spec: FontSpecification): string {
 }
 
 function formatFontSpecification(
-  type: "title" | "header" | "body" | "code",
+  type: "title" | "header" | "code" | "metadata",
   spec: FontSpecification,
 ) {
   if (typeof spec === "string") {
@@ -58,8 +58,9 @@ function formatFontSpecification(
   }
 
   const defaultIncludeWeights = type === "header" ? [400, 700] : [400, 600]
-  const defaultIncludeItalic = type === "body"
-  const weights = spec.weights ?? defaultIncludeWeights
+  const defaultIncludeItalic = false
+  // Metadata fonts typically don't need multiple weights or italics
+  const weights = spec.weights ?? (type === "metadata" ? [400] : defaultIncludeWeights)
   const italic = spec.includeItalic ?? defaultIncludeItalic
 
   const features: string[] = []
@@ -86,12 +87,22 @@ function formatFontSpecification(
 }
 
 export function googleFontHref(theme: Theme) {
-  const { header, body, code } = theme.typography
-  const headerFont = formatFontSpecification("header", header)
-  const bodyFont = formatFontSpecification("body", body)
-  const codeFont = formatFontSpecification("code", code)
+  const { header, code, metadata } = theme.typography
+  const fonts: string[] = []
 
-  return `https://fonts.googleapis.com/css2?family=${headerFont}&family=${bodyFont}&family=${codeFont}&display=swap`
+  if (header) {
+    fonts.push(formatFontSpecification("header", header))
+  }
+  if (code) {
+    fonts.push(formatFontSpecification("code", code))
+  }
+  if (metadata) {
+    fonts.push(formatFontSpecification("metadata", metadata))
+  }
+
+  const fontUrl = `https://fonts.googleapis.com/css2?${fonts.map(f => `family=${f}`).join('&')}&display=swap`
+
+  return fontUrl
 }
 
 export function googleFontSubsetHref(theme: Theme, text: string) {
@@ -157,8 +168,9 @@ ${stylesheet.join("\n\n")}
 
   --titleFont: "${getFontSpecificationName(theme.typography.title || theme.typography.header)}", ${DEFAULT_SANS_SERIF};
   --headerFont: "${getFontSpecificationName(theme.typography.header)}", ${DEFAULT_SANS_SERIF};
-  --bodyFont: "${getFontSpecificationName(theme.typography.body)}", ${DEFAULT_SANS_SERIF};
+  --bodyFont: "Iosevka Etoile", ${DEFAULT_SANS_SERIF};
   --codeFont: "${getFontSpecificationName(theme.typography.code)}", ${DEFAULT_MONO};
+  --metadataFont: ${theme.typography.metadata ? `"${getFontSpecificationName(theme.typography.metadata)}", cursive` : `"Iosevka Etoile", ${DEFAULT_SANS_SERIF}`};
 }
 
 :root[saved-theme="dark"] {

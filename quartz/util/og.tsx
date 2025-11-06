@@ -195,7 +195,7 @@ export const defaultImage: SocialImageOptions["imageStructure"] = ({
 
   // Get tags if available
   const tags = fileData.frontmatter?.tags ?? []
-  const bodyFont = getFontSpecificationName(cfg.theme.typography.body)
+  const bodyFont = "Iosevka Etoile"
   const headerFont = getFontSpecificationName(cfg.theme.typography.header)
 
   return (
