@@ -32,7 +32,7 @@
       display: none;
     }
 
-    // Style for afterBody/page-footer area on mobile
+    // Style for afterBody/page-footer area on mobile - minimal styling
     .page-footer & {
       margin-top: 2rem;
 
@@ -46,19 +46,16 @@
         margin-top: 1rem;
 
         & > li {
-          margin: 1.5rem 0;
-          padding: 1rem;
-          background-color: var(--lightgray);
-          border-radius: 6px;
+          margin: 1.25rem 0;
 
           .section > .desc > h3 {
             font-size: 1rem;
-            margin: 0 0 0.5rem 0;
+            margin: 0 0 0.25rem 0;
           }
 
           .section > .meta {
             font-size: 0.875rem;
-            margin: 0 0 0.5rem 0;
+            margin: 0 0 0.25rem 0;
           }
         }
       }
