@@ -1,4 +1,4 @@
-import { Date, getDate } from "./Date"
+import { Date, getDate, formatDate } from "./Date"
 import { QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import readingTime from "reading-time"
 import { classNames } from "../util/lang"
@@ -11,11 +11,21 @@ interface ContentMetaOptions {
    * Whether to display reading time
    */
   showReadingTime: boolean
+  /**
+   * Whether to display created date
+   */
+  showCreatedDate: boolean
+  /**
+   * Whether to display modified date
+   */
+  showModifiedDate: boolean
   showComma: boolean
 }
 
 const defaultOptions: ContentMetaOptions = {
   showReadingTime: true,
+  showCreatedDate: true,
+  showModifiedDate: true,
   showComma: true,
 }
 
@@ -30,7 +40,29 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
       const segments: (string | JSX.Element)[] = []
 
       if (fileData.dates) {
-        segments.push(<Date date={getDate(cfg, fileData)!} locale={cfg.locale} />)
+        // Display created date if enabled
+        if (options.showCreatedDate && fileData.dates.created) {
+          segments.push(
+            <span>
+              Created at{" "}
+              <time datetime={fileData.dates.created.toISOString()}>
+                {formatDate(fileData.dates.created, cfg.locale)}
+              </time>
+            </span>
+          )
+        }
+
+        // Display modified date if enabled
+        if (options.showModifiedDate && fileData.dates.modified) {
+          segments.push(
+            <span>
+              Updated at{" "}
+              <time datetime={fileData.dates.modified.toISOString()}>
+                {formatDate(fileData.dates.modified, cfg.locale)}
+              </time>
+            </span>
+          )
+        }
       }
 
       // Display reading time if enabled
