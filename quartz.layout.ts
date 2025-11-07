@@ -5,7 +5,14 @@ import * as Component from "./quartz/components"
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
   header: [],
-  afterBody: [],
+  afterBody: [
+    Component.MobileOnly(
+      Component.RecentNotes({
+        limit: 3,
+        filter: (page) => page.slug !== "index",
+      }),
+    ),
+  ],
   footer: Component.Footer({
     links: {
       GitHub: "https://github.com/rizkyilhampra",
@@ -52,14 +59,6 @@ export const defaultContentPageLayout: PageLayout = {
     Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
   ],
-  afterBody: [
-    Component.MobileOnly(
-      Component.RecentNotes({
-        limit: 3,
-        filter: (page) => page.slug !== "index",
-      }),
-    ),
-  ],
 }
 
 // components for pages that display lists of pages  (e.g. tags or folders)
@@ -93,12 +92,4 @@ export const defaultListPageLayout: PageLayout = {
     ),
   ],
   right: [],
-  afterBody: [
-    Component.MobileOnly(
-      Component.RecentNotes({
-        limit: 3,
-        filter: (page) => page.slug !== "index",
-      }),
-    ),
-  ],
 }
