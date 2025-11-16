@@ -112,7 +112,7 @@ async function fetchLocalIosevka(
     return undefined
   }
 
-  const fontPath = path.join(QUARTZ, "static", "fonts", `IosevkaEtoile-${weightName}.ttc`)
+  const fontPath = path.join(QUARTZ, "static", "fonts", `IosevkaEtoile-${weightName}.ttf`)
 
   try {
     return await fs.readFile(fontPath)
@@ -257,7 +257,7 @@ export const defaultImage: SocialImageOptions["imageStructure"] = ({
 
   // Get tags if available
   const tags = fileData.frontmatter?.tags ?? []
-  const titleFont = getFontSpecificationName(cfg.theme.typography.title || "Geist")
+  const titleFont = "Iosevka Etoile"
   const bodyFont = titleFont
   const headerFont = titleFont
 

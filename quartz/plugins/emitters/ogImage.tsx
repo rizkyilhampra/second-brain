@@ -110,9 +110,7 @@ export const CustomOgImages: QuartzEmitterPlugin<Partial<SocialImageOptions>> = 
       return []
     },
     async *emit(ctx, content, _resources) {
-      const cfg = ctx.cfg.configuration
-      const titleFont = cfg.theme.typography.title || "Geist"
-      const fonts = await getSatoriFonts(titleFont, titleFont)
+      const fonts = await getSatoriFonts("Iosevka Etoile", "Iosevka Etoile")
 
       for (const [_tree, vfile] of content) {
         if (vfile.data.frontmatter?.socialImage !== undefined) continue
@@ -120,9 +118,7 @@ export const CustomOgImages: QuartzEmitterPlugin<Partial<SocialImageOptions>> = 
       }
     },
     async *partialEmit(ctx, _content, _resources, changeEvents) {
-      const cfg = ctx.cfg.configuration
-      const titleFont = cfg.theme.typography.title || "Geist"
-      const fonts = await getSatoriFonts(titleFont, titleFont)
+      const fonts = await getSatoriFonts("Iosevka Etoile", "Iosevka Etoile")
 
       // find all slugs that changed or were added
       for (const changeEvent of changeEvents) {

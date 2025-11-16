@@ -23,7 +23,6 @@ const config: QuartzConfig = {
       fontOrigin: "googleFonts",
       cdnCaching: true,
       typography: {
-        title: "Geist",
         code: "Geist Mono",
         metadata: "Caveat",
       },
