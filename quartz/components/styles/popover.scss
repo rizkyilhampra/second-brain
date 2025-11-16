@@ -44,6 +44,22 @@
     cursor: default;
   }
 
+  // Visual feedback for nested popovers (depth > 0)
+  &[data-depth="1"] > .popover-inner {
+    border: 2px solid var(--secondary);
+    box-shadow: 8px 8px 40px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  &[data-depth="2"] > .popover-inner {
+    border: 2px solid var(--tertiary);
+    box-shadow: 10px 10px 44px 0 rgba(0, 0, 0, 0.35);
+  }
+
+  &[data-depth="3"] > .popover-inner {
+    border: 2px solid var(--highlight);
+    box-shadow: 12px 12px 48px 0 rgba(0, 0, 0, 0.4);
+  }
+
   & > .popover-inner[data-content-type] {
     &[data-content-type*="pdf"],
     &[data-content-type*="image"] {
